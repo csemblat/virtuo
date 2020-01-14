@@ -158,6 +158,46 @@ const actors = [{
   }]
 }];
 
+
+function price_of_rental(carId_s, days, distance)
+{
+  var car_price_per_dist = 0
+  var car_price_per_day = 0
+  for(let i = 0; i < 3; i++)
+  {
+    if(cars[i].id== carId_s)
+    {
+      car_price_per_dist = cars[i].pricePerKm
+      car_price_per_day = cars[i].pricePerDay
+    }
+  }
+  var price = car_price_per_dist * distance
+  price += car_price_per_day * days
+  return price
+}
+
+function Rental_length(rental)
+{
+  var a ;
+  var b ;
+  a = rental.pickupDate.split("-");
+  b = rental.returnDate.split("-");
+  var c = Number.parseInt(a[2]);
+  var d = Number.parseInt(b[2]);
+  return (d - c)
+}
+function price_of_specific_rental(rental)
+{
+  var days = Rental_length(rental);
+  var distance = rental.distance;
+  return price_of_rental(rental.carId, days, distance)
+}
+
+
 console.log(cars);
 console.log(rentals);
 console.log(actors);
+
+price_of_specific_rental(rentals[0]);
+price_of_specific_rental(rentals[1]);
+price_of_specific_rental(rentals[2]);
